@@ -76,7 +76,39 @@ describe('Testa o service de sales', function () {
     expect(status).to.equal('SUCCESSFUL');
     expect(data).to.be.deep.equal({ ...salesFromModel[1], quantity: 20 });
   });
+
+  it('NOT_FOUND caso não exista', async function () {
+    sinon.stub(salesModel, 'getById').resolves([[]]);
+
+    const { status, data } = await salesService.updateQuantityOnSale(8, 2, { quantity: 20 });
+
+    expect(status).to.equal('NOT_FOUND');
+    expect(data).to.be.deep.equal({ message: 'Sale not found' });
+  });
   afterEach(function () {
     sinon.restore();
+  });
+
+  it('INVALID_VALUE caso a quantidade seja menor que 1', async function () {
+    const { status, data } = await salesService.updateQuantityOnSale(1, 2, { quantity: 0 });
+
+    expect(status).to.equal('INVALID_VALUE');
+    expect(data).to.be.deep.equal({ message: '"quantity" must be greater than or equal to 1' });
+  });
+
+  it('BAD_REQUEST caso a quantidade não exista', async function () {
+    const { status, data } = await salesService.updateQuantityOnSale(1, 2, {});
+
+    expect(status).to.equal('BAD_REQUEST');
+    expect(data).to.be.deep.equal({ message: '"quantity" is required' });
+  });
+  
+  it('NOT_FOUND caso o product não exista', async function () {
+    sinon.stub(salesModel, 'getById').resolves([salesFromModel]);
+
+    const { status, data } = await salesService.updateQuantityOnSale(1, 8, { quantity: 20 });
+
+    expect(status).to.equal('NOT_FOUND');
+    expect(data).to.be.deep.equal({ message: 'Product not found in sale' });
   });
 });

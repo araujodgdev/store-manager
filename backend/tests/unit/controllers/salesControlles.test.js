@@ -88,6 +88,27 @@ describe('Testa o controller de sales', function () {
     expect(res.status).to.have.been.calledWith(204);
   });
 
+  it('Retorna um status de SUCCESSFUL e a venda atualizada', async function () {
+    sinon.stub(salesService, 'updateQuantityOnSale').resolves({
+      status: 'SUCCESSFUL',
+      data: saleFromModel,
+    });
+
+    const req = {
+      params: { saleId: 1, productId: 1 },
+      body: { quantity: 5 },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await salesController.updateQuantityOnSale(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(saleFromModel);
+  });
+
   afterEach(function () {
     sinon.restore();
   });
