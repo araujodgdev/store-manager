@@ -7,6 +7,15 @@ const getAll = async () => {
   return products;
 };
 
+const getById = async (productId) => {
+  const [product] = await connection.execute(
+    'SELECT * FROM products WHERE id = ?;',
+    [productId],
+  );
+  return product;
+};
+
 module.exports = {
   getAll,
+  getById,
 };
