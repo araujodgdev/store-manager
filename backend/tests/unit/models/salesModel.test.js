@@ -33,6 +33,13 @@ describe('Testa o model de sales', function () {
     expect(sale).to.be.deep.equal(saleInsertFromModel);
   });
 
+  it('Deleta uma sale com sucesso', async function () {
+    sinon.stub(connection, 'execute').resolves([saleFromDB]);
+
+    const sale = await salesModel.deleteSale(1);
+    expect(sale).to.be.deep.equal(saleFromModel);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

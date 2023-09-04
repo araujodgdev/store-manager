@@ -69,6 +69,25 @@ describe('Testa o controller de sales', function () {
     expect(res.json).to.have.been.calledWith(saleInsertFromModel);
   });
 
+  it('Retorna um status de 204 e nenhuma resposta', async function () {
+    sinon.stub(salesService, 'deleteSale').resolves({
+      status: '204',
+      data: '',
+    });
+
+    const req = {
+      params: { id: 1 },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await salesController.deleteSale(req, res);
+    expect(res.status).to.have.been.calledWith(204);
+  });
+
   afterEach(function () {
     sinon.restore();
   });
