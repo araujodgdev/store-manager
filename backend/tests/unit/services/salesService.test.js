@@ -67,6 +67,15 @@ describe('Testa o service de sales', function () {
     expect(data).to.be.deep.equal({ message: 'Sale not found' });
   });
 
+  it('Atualiza a quantity de uma sale', async function () {
+    sinon.stub(salesModel, 'getById').resolves([salesFromModel]);
+    sinon.stub(salesModel, 'updateProductQuantityOnSale').resolves(saleFromModel);
+
+    const { status, data } = await salesService.updateQuantityOnSale(1, 2, { quantity: 20 });
+
+    expect(status).to.equal('SUCCESSFUL');
+    expect(data).to.be.deep.equal({ ...salesFromModel[1], quantity: 20 });
+  });
   afterEach(function () {
     sinon.restore();
   });

@@ -40,6 +40,14 @@ describe('Testa o model de sales', function () {
     expect(sale).to.be.deep.equal(saleFromModel);
   });
 
+  it('Atualiza a quantity de uma sale', async function () {
+    sinon.stub(connection, 'execute').resolves([{ ...salesFromDB[0], quantity: 20 }]);
+
+    await salesModel.updateProductQuantityOnSale(1, 2, 20);
+    const [updatedSale] = await salesModel.getById(1);
+    expect(updatedSale).to.be.deep.equal({ ...salesFromDB[0], quantity: 20 });
+  });
+
   afterEach(function () {
     sinon.restore();
   });
