@@ -23,8 +23,16 @@ const insertNewProduct = async (req, res) => {
   res.status(mapHTTPStatus(status)).json(data);
 };
 
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const { status, data } = await productsService.updateProduct(id, name);
+  res.status(mapHTTPStatus(status)).json(data);
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   insertNewProduct,
+  updateProduct,
 };

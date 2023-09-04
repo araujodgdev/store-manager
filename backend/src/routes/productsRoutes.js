@@ -14,4 +14,11 @@ route
     productsController.insertNewProduct,
   );
 
+route.put(
+  '/:id',
+  productsMiddlewares.nameExists,
+  productsMiddlewares.nameHasCorrectLength,
+  productsController.updateProduct,
+  );
+
 module.exports = route;
