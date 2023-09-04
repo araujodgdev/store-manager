@@ -27,7 +27,7 @@ describe('Testa o model de sales', function () {
   });
 
   it('Insere uma sale', async function () {
-    sinon.stub(connection, 'execute').resolves(saleInsertModel);
+    sinon.stub(connection, 'execute').resolves([{ insertId: 3, saleInsertModel }]);
 
     const sale = await salesModel.insert(saleInsertFromModel.itemsSold);
     expect(sale).to.be.deep.equal(saleInsertFromModel);
