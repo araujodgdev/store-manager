@@ -13,12 +13,12 @@ const getProductById = async (productId) => {
   const error = validateId(productId);
   if (error) return ({ status: error.status, data: error.data });
 
-  const data = await productsModel.getById(productId);
+  const [data] = await productsModel.getById(productId);
 
-  if (!data) {
+  if (data === undefined) {
     return ({
       status: 'NOT_FOUND',
-      data: { message: 'Product Not Found' },
+      data: { message: 'Product not found' },
     });
   }
 

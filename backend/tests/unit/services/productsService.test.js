@@ -16,7 +16,7 @@ describe('Testa o service de produtos', function () {
   });
 
   it('Retorna um produto pelo id com sucesso', async function () {
-    sinon.stub(productsModel, 'getById').resolves(productsFromModel[0]);
+    sinon.stub(productsModel, 'getById').resolves([productsFromModel[0]]);
 
     const { status, data } = await productsService.getProductById(1);
 
@@ -25,19 +25,19 @@ describe('Testa o service de produtos', function () {
   });
 
   it('Retorna um erro caso o id do produto não exista', async function () {
-    sinon.stub(productsModel, 'getById').resolves(null);
+    sinon.stub(productsModel, 'getById').resolves([]);
 
     const { status, data } = await productsService.getProductById(8);
 
     expect(status).to.equal('NOT_FOUND');
-    expect(data).to.be.deep.equal({ message: 'Product Not Found' });
+    expect(data).to.be.deep.equal({ message: 'Product not found' });
   });
 
   it('Retorna um erro caso o id do produto não seja válido', async function () {
     const { status, data } = await productsService.getProductById('abc');
 
     expect(status).to.equal('INVALID_DATA');
-    expect(data).to.be.deep.equal({ message: 'Invalid product id' });
+    expect(data).to.be.deep.equal({ message: 'Invalid id' });
   });
 
   afterEach(function () {
