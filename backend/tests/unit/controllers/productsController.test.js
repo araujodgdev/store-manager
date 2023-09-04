@@ -70,6 +70,29 @@ describe('Testa o controller de produtos', function () {
     expect(res.json).to.have.been.calledWith(productsFromModel[0]);
   });
 
+  it('Retorna um status CREATED e o produto inserido', async function () {
+    sinon.stub(productsService, 'insertProduct').resolves({
+      status: 'CREATED',
+      data: {
+        id: 6,
+        name: 'Produto Teste',
+      },
+    });
+
+    const req = {
+      body: { name: 'Produto Teste' },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    
+    await productsController.insertNewProduct(req, res);
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith({ id: 6, name: 'Produto Teste' });
+  });
+
   afterEach(function () {
     sinon.restore();
   });

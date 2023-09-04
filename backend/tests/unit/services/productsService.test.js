@@ -40,6 +40,18 @@ describe('Testa o service de produtos', function () {
     expect(data).to.be.deep.equal({ message: 'Invalid id' });
   });
 
+  it('Insere um novo produto com sucesso', async function () {
+    sinon.stub(productsModel, 'insert').resolves({
+      id: 6,
+      name: 'Produto Teste',
+    });
+
+      const { status, data } = await productsService.insertProduct('Produto Teste');
+
+      expect(status).to.equal('CREATED');
+      expect(data).to.be.deep.equal({ id: 6, name: 'Produto Teste' });
+  });
+
   afterEach(function () {
     sinon.restore();
   });
