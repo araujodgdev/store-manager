@@ -1,16 +1,16 @@
 const { productIdSchema } = require('./schemas');
 
-const validateProductId = (productId) => {
-  const { error } = productIdSchema.validate(productId);
+const validateId = (id) => {
+  const { error } = productIdSchema.validate(id);
 
   if (error) {
     return ({
       status: 'INVALID_DATA',
-      data: { message: 'Invalid product id' },
+      data: { message: 'Invalid id' },
     });
   }
 };
 
 module.exports = {
-  validateProductId,
+  validateId,
 };

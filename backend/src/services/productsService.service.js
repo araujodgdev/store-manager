@@ -1,5 +1,5 @@
 const { productsModel } = require('../models');
-const { validateProductId } = require('./validations/productsValidations');
+const { validateId } = require('./validations/productsValidations');
 
 const getAllProducts = async () => {
   const data = await productsModel.getAll();
@@ -10,7 +10,7 @@ const getAllProducts = async () => {
 };
 
 const getProductById = async (productId) => {
-  const error = validateProductId(productId);
+  const error = validateId(productId);
   if (error) return ({ status: error.status, data: error.data });
 
   const data = await productsModel.getById(productId);
