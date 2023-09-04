@@ -51,7 +51,10 @@ describe('Testa o controller de produtos', function () {
   });
 
   it('Retorna um status de SUCCESSFUL e o produto por id', async function () {
-    sinon.stub(productsService, 'getProductById').resolves(productsFromModel[0]);
+    sinon.stub(productsService, 'getProductById').resolves({
+      status: 'SUCCESSFUL',
+      data: productsFromModel[0],
+    });
 
     const req = {
       params: { id: 1 },
