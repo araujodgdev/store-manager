@@ -34,6 +34,20 @@ describe('Testa o model de produtos', function () {
     });
   });
 
+  it('Atualiza um produto', async function () {
+    sinon.stub(connection, 'execute').resolves([productsFromDB[0]]);
+
+    const product = await productsModel.update(1, 'Produto Teste');
+    expect(product).to.be.deep.equal(productsFromModel[0]);
+  });
+
+  it('Deleta um produto', async function () {
+    sinon.stub(connection, 'execute').resolves([productsFromDB[0]]);
+
+    const product = await productsModel.deleteProduct(1);
+    expect(product).to.be.deep.equal(productsFromModel[0]);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

@@ -130,6 +130,52 @@ describe('Testa o controller de produtos', function () {
     expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
   });
 
+  it('Retorna um status de SUCCESSFUL e o produto atualizado', async function () {
+    sinon.stub(productsService, 'updateProduct').resolves({
+      status: 'SUCCESSFUL',
+      data: {
+        id: 1,
+        name: 'Produto Teste',
+      },
+    });
+
+    const next = sinon.stub().returns();
+
+    const req = {
+      params: { id: 1 },
+      body: { name: 'Produto Teste' },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await productsMiddlewares.nameExists(req, res, next);
+    await productsMiddlewares.nameHasCorrectLength(req, res, next);
+    await productsController.updateProduct(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith({ id: 1, name: 'Produto Teste' });
+  });
+
+  it('Retorna um status de 204 e nenhuma reposta quando o produto for deletado com sucesso', async function () {
+    sinon.stub(productsService, 'deleteProduct').resolves({
+      status: '204',
+    });
+
+    const req = {
+      params: { id: 1 },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await productsController.deleteProduct(req, res);
+    expect(res.status).to.have.been.calledWith(204);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

@@ -46,14 +46,12 @@ const updateProduct = async (id, name) => {
     });
   }
 
-  const data = await productsModel.update(id, name);
+  await productsModel.update(id, name);
 
-  if (data) {
     return ({
       status: 'SUCCESSFUL',
       data: { id: +id, name },
     });
-  }
 };
 
 const deleteProduct = async (id) => {
