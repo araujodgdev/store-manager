@@ -51,8 +51,18 @@ const insert = async (productData) => {
   });
 };
 
+const deleteSale = async (saleId) => {
+  const [sale] = await connection.execute(
+    'DELETE FROM sales WHERE id = ?;',
+    [saleId],
+  );
+
+  return sale;
+};
+
 module.exports = {
   getAll,
   getById,
   insert,
+  deleteSale,
 };

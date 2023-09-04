@@ -37,8 +37,26 @@ const insertSale = async (productData) => {
   });
 };
 
+const deleteSale = async (id) => {
+  const [sale] = await salesModel.getById(id);
+
+  if (sale.length === 0) {
+    return ({
+      status: 'NOT_FOUND',
+      data: { message: 'Sale not found' },
+    });
+  }
+
+  await salesModel.deleteSale(id);
+
+  return ({
+    status: '204',
+  });
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
   insertSale,
+  deleteSale,
 };
