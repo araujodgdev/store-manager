@@ -76,12 +76,12 @@ describe('Testa o controller de produtos', function () {
       status: 'CREATED',
       data: {
         id: 6,
-        name: 'Produto Teste',
+        name: 'Produto Teste1',
       },
     });
     const next = sinon.stub().returns();
     const req = {
-      body: { name: 'Produto Teste' },
+      body: { name: 'Produto Teste1' },
     };
 
     const res = {
@@ -93,7 +93,7 @@ describe('Testa o controller de produtos', function () {
     await productsMiddlewares.nameHasCorrectLength(req, res, next);
     await productsController.insertNewProduct(req, res);
     expect(res.status).to.have.been.calledWith(201);
-    expect(res.json).to.have.been.calledWith({ id: 6, name: 'Produto Teste' });
+    expect(res.json).to.have.been.calledWith({ id: 6, name: 'Produto Teste1' });
   });
 
   it('Retorna um status de BAD_REQUEST e uma mensagem de erro, ao tentar cadastrar um produto sem nome', async function () {
