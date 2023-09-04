@@ -13,12 +13,12 @@ const getSaleById = async (saleId) => {
   const error = validateId(saleId);
   if (error) return ({ status: error.status, data: error.data });
 
-  const data = await salesModel.getById(saleId);
+  const [data] = await salesModel.getById(saleId);
 
-  if (!data) {
+  if (data.length === 0) {
     return ({
       status: 'NOT_FOUND',
-      data: { message: 'Sale Not Found' },
+      data: { message: 'Sale not found' },
     });
   }
 
