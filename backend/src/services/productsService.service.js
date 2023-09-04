@@ -47,10 +47,13 @@ const updateProduct = async (id, name) => {
   }
 
   const data = await productsModel.update(id, name);
-  return ({
-    status: 'SUCCESSFUL',
-    data: { id: +id, name },
-  });
+
+  if (data) {
+    return ({
+      status: 'SUCCESSFUL',
+      data: { id: +id, name },
+    });
+  }
 };
 
 module.exports = {
