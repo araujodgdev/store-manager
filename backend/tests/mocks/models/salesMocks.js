@@ -22,26 +22,21 @@ const saleFromModel = [
     { date, productId: 2, quantity: 10 },
 ];
 
-const saleCreated = {
-    status: 'CREATED',
-    data: { id: 5, itemsSold: [{ productId: 1, quantity: 1 }] },
-};
+const saleInsertModel = [
+  {
+    productId: 1,
+    quantity: 1,
+  },
+  {
+    productId: 2,
+    quantity: 5,
+  },
+];
 
 const saleNoQuantity = {
     status: 'INVALID_VALUE',
     data: { message: '"quantity" must be greater than or equal to 1' },
 };
-
-const saleInsert = [
-    {
-      productId: 1,
-      quantity: 3,
-    },
-    {
-      productId: 1,
-      quantity: 10,
-    },
-];
 
 const saleInsertWrongProductId = [
     {
@@ -54,16 +49,19 @@ const saleInsertWrongProductId = [
     },
 ];
 
-const saleInsertFromModel = [
+const saleInsertFromModel = {
+  id: 3,
+  itemsSold: [
     {
       productId: 1,
-      quantity: 3,
+      quantity: 1,
     },
     {
-      productId: 1,
-      quantity: 10,
+      productId: 2,
+      quantity: 5,
     },
-];
+  ],
+};
 
 const saleInsertRequest = {
     fieldCount: 0,
@@ -79,10 +77,9 @@ module.exports = {
     salesFromModel,
     saleFromDB,
     saleFromModel,
-    saleCreated,
     saleNoQuantity,
-    saleInsert,
     saleInsertRequest,
-    saleInsertFromModel,
     saleInsertWrongProductId,
+    saleInsertModel,
+    saleInsertFromModel,
 };

@@ -6,4 +6,6 @@ route.get('/', salesController.getAllSales);
 
 route.get('/:id', salesController.getSaleById);
 
+route.post('/', salesController.insertSale);
+
 module.exports = route;

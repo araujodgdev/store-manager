@@ -7,6 +7,8 @@ const {
   saleFromDB,
   salesFromModel,
   saleFromModel,
+  saleInsertModel,
+  saleInsertFromModel,
 } = require('../../mocks/models/salesMocks');
 
 describe('Testa o model de sales', function () {
@@ -22,6 +24,13 @@ describe('Testa o model de sales', function () {
 
     const sale = await salesModel.getById(1);
     expect(sale).to.be.deep.equal(saleFromModel);
+  });
+
+  it('Insere uma sale', async function () {
+    sinon.stub(connection, 'execute').resolves(saleInsertModel);
+
+    const sale = await salesModel.insert(saleInsertFromModel.itemsSold);
+    expect(sale).to.be.deep.equal(saleInsertFromModel);
   });
 
   afterEach(function () {

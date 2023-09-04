@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { salesModel } = require('../../../src/models');
 const { salesService } = require('../../../src/services');
 const { 
-  salesFromModel, saleFromModel,
+  salesFromModel, saleFromModel, saleInsertFromModel, saleInsertModel,
 } = require('../../mocks/models/salesMocks');
 
 describe('Testa o service de sales', function () {
@@ -38,6 +38,15 @@ describe('Testa o service de sales', function () {
 
     expect(status).to.equal('INVALID_DATA');
     expect(data).to.be.deep.equal({ message: 'Invalid id' });
+  });
+
+  it('Insere uma sale com sucesso', async function () {
+    sinon.stub(salesModel, 'insert').resolves(saleInsertFromModel);
+
+    const { status, data } = await salesService.insertSale(saleInsertModel);
+
+    expect(status).to.equal('CREATED');
+    expect(data).to.be.deep.equal(saleInsertFromModel);
   });
 
   afterEach(function () {
